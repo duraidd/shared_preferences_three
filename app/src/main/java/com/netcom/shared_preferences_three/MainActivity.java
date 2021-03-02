@@ -1,6 +1,7 @@
 package com.netcom.shared_preferences_three;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,15 +12,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 public class MainActivity extends AppCompatActivity {
     EditText user_name,password;
     Button btn;
+    ConstraintLayout mainLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         user_name = findViewById(R.id.user_name_main_activity);
         password = findViewById(R.id.password_main_activity);
+        mainLayout = findViewById(R.id.mainLayout);
         SharedPreferences settings = getSharedPreferences("user_name", MODE_PRIVATE);
         String valuefromDataStore = settings.getString("user_name_value", "");
         String passwdvaluefromDatastore = settings.getString("user_pwd_value","");
@@ -46,14 +51,21 @@ public class MainActivity extends AppCompatActivity {
                     editor.apply();
                     Intent h = new Intent(MainActivity.this, homepage.class);
                     startActivity(h);
+                    MainActivity.this.finish();
                 }
                 else if(textGotfromUser.equals("") && pwdGotfromuser.equals("")) {
                     System.out.println(textGotfromUser+"text from user");
-                    Toast.makeText(getApplicationContext(), "Please enter username and password", Toast.LENGTH_LONG).show();
+                    Snackbar.make(mainLayout,"Please enter username and password",Snackbar.LENGTH_LONG).show();
+                }else if(!textGotfromUser.equals("") && pwdGotfromuser.equals("")) {
+                    Snackbar.make(mainLayout, "Please enter your password",Snackbar.LENGTH_LONG).show();
+                }
+                else if (textGotfromUser.equals("") && !pwdGotfromuser.equals(""))
+                {
+                    Snackbar.make(mainLayout, "Please enter user name",Snackbar.LENGTH_LONG).show();
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(),"Invalid User",Toast.LENGTH_LONG).show();
+                    Snackbar.make(mainLayout,"Invalid User",Snackbar.LENGTH_LONG).show();
                 }
             }
         });
