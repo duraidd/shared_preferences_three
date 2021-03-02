@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,10 +23,10 @@ public class MainActivity extends AppCompatActivity {
         password = findViewById(R.id.password_main_activity);
         SharedPreferences settings = getSharedPreferences("user_name", MODE_PRIVATE);
         String valuefromDataStore = settings.getString("user_name_value", "");
-        String pwdvaluefromDatastore = settings.getString("user_pwd_value","");
+        String passwdvaluefromDatastore = settings.getString("user_pwd_value","");
         System.out.println("value stored "+valuefromDataStore);
-        System.out.println("pwd value stored "+pwdvaluefromDatastore);
-        if(valuefromDataStore!=null && valuefromDataStore!="")
+        System.out.println("pwd value stored "+passwdvaluefromDatastore);
+        if(valuefromDataStore!=null && !valuefromDataStore.equals(""))
         {
             Intent i =new Intent(MainActivity.this,homepage.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -47,11 +48,14 @@ public class MainActivity extends AppCompatActivity {
                     Intent h = new Intent(MainActivity.this, homepage.class);
                     startActivity(h);
                 }
+                else if(textGotfromUser.equals("") && pwdGotfromuser.equals("")) {
+                    System.out.println(textGotfromUser+"text from user");
+                    Toast.makeText(getApplicationContext(), "Please enter username and password", Toast.LENGTH_LONG).show();
+                }
                 else
                 {
-                  Toast.makeText(getApplicationContext(),"Invalid User",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Invalid User",Toast.LENGTH_LONG).show();
                 }
-
             }
         });
     }
