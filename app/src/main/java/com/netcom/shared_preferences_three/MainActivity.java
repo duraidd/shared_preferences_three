@@ -28,9 +28,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences("user_name", MODE_PRIVATE);
         String valuefromDataStore = settings.getString("user_name_value", "");
         String passwdvaluefromDatastore = settings.getString("user_pwd_value","");
-        System.out.println("value stored "+valuefromDataStore);
-        System.out.println("pwd value stored "+passwdvaluefromDatastore);
-        if(valuefromDataStore!=null && !valuefromDataStore.equals(""))
+        if(valuefromDataStore!=null && !valuefromDataStore.equals("") && passwdvaluefromDatastore!=null && !passwdvaluefromDatastore.equals(""))
         {
             Intent i =new Intent(MainActivity.this,homepage.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -54,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.this.finish();
                 }
                 else if(textGotfromUser.equals("") && pwdGotfromuser.equals("")) {
-                    System.out.println(textGotfromUser+"text from user");
                     Snackbar.make(mainLayout,"Please enter username and password",Snackbar.LENGTH_LONG).show();
                 }else if(!textGotfromUser.equals("") && pwdGotfromuser.equals("")) {
                     Snackbar.make(mainLayout, "Please enter your password",Snackbar.LENGTH_LONG).show();
